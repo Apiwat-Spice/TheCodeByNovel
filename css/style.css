@@ -1,0 +1,60 @@
+/* =========================
+   Global
+========================= */
+body {
+  font-family: "Segoe UI", Tahoma, sans-serif;
+}
+
+/* =========================
+   Reader
+========================= */
+
+/* =========================
+   Dark Mode
+========================= */
+body.bg-dark {
+  background-color: #121212 !important;
+}
+
+body.bg-dark #content {
+  color: #f1f1f1;
+}
+
+/* =========================
+   Library
+========================= */
+.list-group-item {
+  font-size: 18px;
+}
+
+/* =========================
+   Buttons
+========================= */
+button {
+  margin-right: 5px;
+}
+#content {
+  max-width: 800px;
+  margin: auto;
+  line-height: 1.9;
+  white-space: pre-line;
+  font-size: 18px;
+}
+
+.book-cover {
+  height: 240px;
+  object-fit: cover;
+}
+
+.book-card {
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+
+.book-card:hover {
+  transform: scale(1.05);
+}
+
+.card-title {
+  font-size: 14px;
+}

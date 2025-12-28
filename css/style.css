@@ -58,3 +58,34 @@ button {
 .card-title {
   font-size: 14px;
 }
+.scanner-wrapper {
+  position: relative;
+  max-width: 360px;
+  margin: auto;
+}
+
+video {
+  width: 100%;
+  border-radius: 12px;
+  background: black;
+}
+
+.scanner-controls {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.scanner-controls button,
+.scanner-controls label {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}

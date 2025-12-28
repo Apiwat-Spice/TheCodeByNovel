@@ -1,41 +1,66 @@
-const user = db.users.find(u => u.id == localStorage.getItem("userId"));
+let video = document.getElementById("video");
+let currentStream = null;
+let usingFrontCamera = false;
+let flashOn = false;
+let currentTrack = null;
 
-// ===== QR SCAN =====
-const qr = new Html5Qrcode("reader");
-
-qr.start(
-  { facingMode: "environment" },
-  { fps: 10, qrbox: 250 },
-  (decodedText) => {
-    code.value = decodedText;
-    qr.stop();
-  }
-);
-
-// ===== Redeem Code =====
-function redeem() {
-  const c = code.value.trim();
-  const userId = localStorage.getItem("userId");
-
-  const redeem = db.redeemCodes.find(r => r.code === c);
-  if (!redeem) return alert("❌ โค้ดไม่ถูกต้อง");
-  if (redeem.usedBy) return alert("❌ โค้ดนี้ถูกใช้แล้ว");
-
-  // ดึง library จาก localStorage
-  let library = JSON.parse(localStorage.getItem("library")) || [];
-
-  if (library.includes(redeem.bookId)) {
-    return alert("📚 นิยายเล่มนี้มีอยู่แล้ว");
+// ▶️ เปิดกล้อง
+async function startCamera() {
+  if (currentStream) {
+    currentStream.getTracks().forEach(track => track.stop());
   }
 
-  library.push(redeem.bookId);
+  const constraints = {
+    video: {
+      facingMode: usingFrontCamera ? "user" : "environment"
+    }
+  };
 
-  // บันทึกถาวร
-  localStorage.setItem("library", JSON.stringify(library));
+  currentStream = await navigator.mediaDevices.getUserMedia(constraints);
+  video.srcObject = currentStream;
 
-  // mark code used (mock)
-  redeem.usedBy = userId;
-
-  alert("✅ เพิ่มนิยายเข้าคลังแล้ว");
-  window.location.href = "library.html";
+  currentTrack = currentStream.getVideoTracks()[0];
 }
+
+// 🔄 สลับกล้องหน้า / หลัง
+document.getElementById("switchCamera").onclick = () => {
+  usingFrontCamera = !usingFrontCamera;
+  startCamera();
+};
+
+// 🔦 เปิด / ปิดแฟลช
+document.getElementById("toggleFlash").onclick = async () => {
+  if (!currentTrack) return;
+
+  const capabilities = currentTrack.getCapabilities();
+  if (!capabilities.torch) {
+    alert("อุปกรณ์นี้ไม่รองรับแฟลช");
+    return;
+  }
+
+  flashOn = !flashOn;
+  await currentTrack.applyConstraints({
+    advanced: [{ torch: flashOn }]
+  });
+};
+
+// 🖼 อัปโหลดรูป QR แทนการสแกน
+document.getElementById("uploadImage").addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  // mockup: สมมุติอ่าน QR ได้
+  document.getElementById("redeemCode").value = "ABC-123-XYZ";
+  alert("อ่าน QR จากรูปเรียบร้อย");
+});
+
+// 🎫 ใช้โค้ด
+function redeemByCode() {
+  const code = document.getElementById("redeemCode").value.trim();
+  if (!code) return alert("กรุณาใส่โค้ด");
+
+  alert("โค้ดถูกใช้แล้ว หนังสือถูกเพิ่มเข้าคลัง");
+  // ตรงนี้คุณจะเอาไปเชื่อม db.redeemCodes + library
+}
+
+startCamera();

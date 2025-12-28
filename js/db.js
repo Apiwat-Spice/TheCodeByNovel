@@ -18,7 +18,7 @@ const db = {
     {
       id: "novel001",
       title: "เงาในคืนจันทร์",
-      cover: "assets/cover1.jpg",
+      cover: "https://upload.wikimedia.org/wikipedia/en/4/47/Take_Cover.jpg",
       content: `
 บทที่ 1 : เสียงกระซิบในความมืด
 
@@ -30,7 +30,7 @@ const db = {
     {
       id: "novel002",
       title: "คืนฝนพรำที่ปลายทาง",
-      cover: "assets/cover2.jpg",
+      cover: "https://upload.wikimedia.org/wikipedia/en/4/47/Take_Cover.jpg",
       content: `
 บทที่ 1 : ฝนแรกของฤดู
 
@@ -42,7 +42,7 @@ const db = {
     {
       id: "novel003",
       title: "ระยะห่างของหัวใจ",
-      cover: "assets/cover3.jpg",
+      cover: "https://upload.wikimedia.org/wikipedia/en/4/47/Take_Cover.jpg",
       content: `
 บทที่ 1 : คนแปลกหน้า
 
@@ -54,7 +54,7 @@ const db = {
     {
       id: "novel004",
       title: "ใต้เงาซากุระ",
-      cover: "assets/cover4.jpg",
+      cover: "https://upload.wikimedia.org/wikipedia/en/4/47/Take_Cover.jpg",
       content: `
 บทที่ 1 : กลีบดอกไม้แรก
 
@@ -66,7 +66,7 @@ const db = {
     {
       id: "novel005",
       title: "บันทึกวันสิ้นโลก",
-      cover: "assets/cover5.jpg",
+      cover: "https://upload.wikimedia.org/wikipedia/en/4/47/Take_Cover.jpg",
       content: `
 บทที่ 1 : วันสุดท้าย
 

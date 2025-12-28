@@ -1,4 +1,7 @@
 const user = db.users.find(u => u.id == localStorage.getItem("userId"));
+const code = document.getElementById("code");
+
+let currentCamera = "environment"; // เริ่มที่กล้องหลัง
 
 // ===== QR SCAN =====
 const qr = new Html5Qrcode("reader");
@@ -11,6 +14,33 @@ qr.start(
     qr.stop();
   }
 );
+
+function startCamera() {
+  qr.start(
+    { facingMode: currentCamera },
+    { fps: 10, qrbox: 250 },
+    (decodedText) => {
+      code.value = decodedText;
+      qr.stop();
+    },
+    (errorMessage) => {
+      // ignore scan errors
+    }
+  );
+}
+
+// เริ่มกล้องครั้งแรก
+startCamera();
+
+// ===== ปุ่มสลับกล้อง =====
+function toggleCamera() {
+  qr.stop().then(() => {
+    currentCamera = currentCamera === "environment" ? "user" : "environment";
+    startCamera();
+  }).catch(err => {
+    console.error(err);
+  });
+}
 
 // ===== Redeem Code =====
 function redeem() {
